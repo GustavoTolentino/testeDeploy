@@ -1,0 +1,26 @@
+.modalAreaScanner {
+    position: fixed;
+    z-index: 5;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 24px;
+    padding-top: 0;
+}
+.modalOppacity{
+    z-index: 1;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    opacity: 40%;
+    top: 0;
+    left: 0;
+}
+.modalButtonArea{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 20px 0;
+    color: #000000;
+}

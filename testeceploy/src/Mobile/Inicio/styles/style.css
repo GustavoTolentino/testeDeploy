@@ -1,0 +1,16 @@
+.actionsButtonsArea {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #F3F3F3;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.actionsArea{
+    margin-bottom: 50px;
+}
+
+.mobileInicioContent h1{
+    font-size: 18px;
+}
