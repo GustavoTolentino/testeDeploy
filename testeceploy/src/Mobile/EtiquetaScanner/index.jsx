@@ -8,21 +8,23 @@ export function EtiquetaScanner({closeModalMethod, methodUpdateArray}) {
 
   return (
     <div>
-      <div className="modalOppacity"></div>
-      <div className="modalAreaScanner">
-        <div onClick={closeModalMethod} className="modalButtonArea"><AiOutlineClose/></div>
-        <BarcodeScannerComponent
-          onUpdate={(err, result) => {
-            if (result){
-              methodUpdateArray(result.text);
-            } 
-            else {
-              setData("Not Found");
-              console.log(err);
-            }
-          }}
-        />
-        <p>{data}</p>
+      <div className="modalOppacity"/>
+      <div className="centerAreaModal">
+        <div className="modalAreaScanner">
+          <div onClick={closeModalMethod} className="modalButtonArea"><AiOutlineClose/></div>
+          <BarcodeScannerComponent
+            onUpdate={(err, result) => {
+              if (result){
+                methodUpdateArray(result.text);
+              } 
+              else {
+                setData("Not Found");
+                console.log(err);
+              }
+            }}
+            />
+          <p>{data}</p>
+        </div>
       </div>
     </div>
   );
