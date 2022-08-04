@@ -39,10 +39,26 @@ export function Inicio() {
     progress: undefined,
     });
   }
+  function thisEtiquetaAlreadyExists(etiqueta){
+    toast.error('A etiqueta: ' + etiqueta + " ja foi lida!", {
+    position: "top-right",
+    autoClose: 8000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
+  }
   function setNewEtiqueta(newEtiqueta){
-    setArrayEtiquetas(state => state + newEtiqueta);
-    setCanLoadList(true);
-    newEtiquetaOnTable(newEtiqueta);
+    if (arrayEtiquetas.filter(etiqueta => etiqueta !== newEtiqueta)){
+
+        setArrayEtiquetas(arrayEtiquetas.concat(newEtiqueta));
+        setCanLoadList(true);
+        newEtiquetaOnTable(newEtiqueta);
+    }else{
+        thisEtiquetaAlreadyExists(newEtiqueta);
+    }
   }
   function deleteEtiqueta(etiquetaIndex) {
     setArrayEtiquetas(arrayEtiquetas.filter(element => {
