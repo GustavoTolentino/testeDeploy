@@ -40,7 +40,7 @@ export function Inicio() {
     });
   }
   function setNewEtiqueta(newEtiqueta){
-    setArrayEtiquetas(arrayEtiquetas.concat(newEtiqueta));
+    setArrayEtiquetas(state => state + newEtiqueta);
     setCanLoadList(true);
     newEtiquetaOnTable(newEtiqueta);
   }
