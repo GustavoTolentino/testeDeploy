@@ -5,6 +5,8 @@
     border-radius: 4px;
     padding: 24px;
     padding-top: 0;
+    width: 200px;
+    margin: 20px;
 }
 .modalOppacity{
     z-index: 1;

@@ -53,7 +53,7 @@ export function Inicio() {
   return (
     <div className="contentArea">
         <div className="mobileInicioContent">
-            <img src={LogoGI} style={{width: "350px"}} alt="Logo do software Grafica Inteligente."/>
+            <img src={LogoGI} style={{width: "320px"}} alt="Logo do software Grafica Inteligente."/>
             <h1>Bem-vindo, Joao!</h1>
 
             { boolModal && isMobile && (

@@ -12,7 +12,6 @@ export function EtiquetaScanner({closeModalMethod, methodUpdateArray}) {
       <div className="modalAreaScanner">
         <div onClick={closeModalMethod} className="modalButtonArea"><AiOutlineClose/></div>
         <BarcodeScannerComponent
-          width={"400px"}
           onUpdate={(err, result) => {
             if (result){
               methodUpdateArray(result.text);
