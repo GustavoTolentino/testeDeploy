@@ -8,16 +8,17 @@ import { BsFillCameraFill, BsFillGearFill } from "react-icons/bs"
 import { IoMdQrScanner } from "react-icons/io"
 import { AiOutlineClose } from "react-icons/ai";
 import { BiImport } from "react-icons/bi"
-import { EtiquetaScanner } from "../EtiquetaScanner";
+import { EtiquetaScanner } from "../../components/EtiquetaScanner";
 import { useMediaQuery } from 'react-responsive';
-import { useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PistolScannerModal } from "../../components/PistolScannerModal";
 
 export function Inicio() {
     // const history = useNavigate();
     const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
     const [boolModal, setBoolModal] = useState(false);
+    const [boolPistolModal, setBoolPistolModal] = useState(false);
     const [canLoadList, setCanLoadList] = useState(false);
     const [arrayEtiquetas, setArrayEtiquetas] = useState([]);
 
@@ -28,31 +29,37 @@ export function Inicio() {
     else
         setBoolModal(false);
   }
+  const OpenClosePistolModal = () =>
+  {
+    if(boolPistolModal === false)
+        setBoolPistolModal(true);
+    else
+        setBoolPistolModal(false);
+  }
   function newEtiquetaOnTable(etiqueta){
     toast.success('A etiqueta: ' + etiqueta + " foi adicionada com sucesso!", {
-    position: "top-right",
-    autoClose: 8000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
+        position: "top-right",
+        autoClose: 8000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
     });
   }
   function thisEtiquetaAlreadyExists(etiqueta){
     toast.error('A etiqueta: ' + etiqueta + " ja foi lida!", {
-    position: "top-right",
-    autoClose: 8000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
+        position: "top-right",
+        autoClose: 8000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
     });
   }
   function setNewEtiqueta(newEtiqueta){
     if (arrayEtiquetas.filter(etiqueta => etiqueta !== newEtiqueta)){
-
         setArrayEtiquetas(arrayEtiquetas.concat(newEtiqueta));
         setCanLoadList(true);
         newEtiquetaOnTable(newEtiqueta);
@@ -77,6 +84,11 @@ export function Inicio() {
                 closeModalMethod={OpenCloseModal}
                 methodUpdateArray={setNewEtiqueta}
             />)}
+            { boolPistolModal && !isMobile && (
+            <PistolScannerModal 
+                closeModalMethod={OpenClosePistolModal}
+                methodUpdateArray={setNewEtiqueta}
+            />)}
 
             <div className="actionsArea">
                 <h2>Ações</h2>
@@ -91,6 +103,7 @@ export function Inicio() {
                     )}
                     { !isMobile && (
                         <ActionButton
+                            method={OpenClosePistolModal}
                             icon={<IoMdQrScanner/>}
                             actionText="Scannear"
                         />
