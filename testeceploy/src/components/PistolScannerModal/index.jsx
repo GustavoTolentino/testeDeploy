@@ -9,7 +9,7 @@ export function PistolScannerModal({closeModalMethod, methodUpdateArray}) {
   }, [pistolInputData]);
 
   function handleVerifyPistolInput(){
-    if(pistolInputData.length >= 22){
+    if(pistolInputData.length === 22){
       methodUpdateArray(pistolInputData);
       setPistolInputData("");
     }
