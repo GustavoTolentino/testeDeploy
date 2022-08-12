@@ -8,7 +8,20 @@
 }
 
 .actionsArea{
-    margin-bottom: 50px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+.actionsArea h2, .tagMobileArea h2{
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.mobileInicioContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    flex-direction: column;
 }
 
 .mobileInicioContent h1{
@@ -17,4 +30,39 @@
 
 .contentArea {
     margin: 20px;
+}
+
+.buttonAreaScreenApp {
+    width: 100%;
+}
+.ContentInicioPage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.tagMobileArea{
+    width: 100%;
+}
+.tagMobileArea table{
+    min-height: 60px;
+}
+.tdDelete{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.trashCanIcon:hover {
+    color: #900000;
+}
+tr th{
+    padding: 5px;
+}
+.thTextCenter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ContentInicioPage h1{
+    margin-bottom: 40px;
 }

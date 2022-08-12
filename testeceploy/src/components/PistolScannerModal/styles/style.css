@@ -1,0 +1,52 @@
+.modalOppacity{
+    z-index: 1;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    opacity: 70%;
+    top: 0;
+    left: 0;
+}
+.modalButtonArea{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 20px 0;
+    color: #000000;
+}
+.modalAreaPistolScanner {
+    position: fixed;
+    z-index: 5;
+    background-color: #ffffff;
+    border-radius: 4px;
+    margin-top: 400px;
+    padding: 24px;
+    padding-top: 0;
+    width: 400px;
+    height: 540px;
+}
+.modalAreaPistolScanner h2 {
+    font-size: 18px;
+}
+.modalAreaPistolScanner input{
+    outline: none;
+}
+.centerAreaModal{
+    z-index: 10 !important;
+    width: 100%;
+    position: relative;
+    top: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.closeButtonPistolModal:hover{
+    color: #900000;
+}
+.inputButtonArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

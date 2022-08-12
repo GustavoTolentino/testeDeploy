@@ -5,6 +5,21 @@ const LoginButton = css`
   color: #ffffff;
 `;
 
+const CloseModal = css`
+  margin: 0 10px;
+  background-color: #900000;
+  color: #ffffff;
+  height: 30px;
+  padding: 5px 4px;
+  font-size: 16px;
+  width: 60%;
+
+  :hover{
+    background-color: #790000;
+    color: #ffffff;
+  }
+`;
+
 const BackgroundLessButton = css`
   background-color: #ffffff;
   color: #900000;
@@ -34,9 +49,10 @@ export const ButtonWrapper = styled.button`
   :hover{
     background-color: #900000;
   }
-  ${({ login, backgroundLess }) => {
+  ${({ login, backgroundLess, closeModal }) => {
     if (login) return LoginButton;
     if (backgroundLess) return BackgroundLessButton;
+    if (closeModal) return CloseModal;
     return DefaultButton;
   }};
 `;

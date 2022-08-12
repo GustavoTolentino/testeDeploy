@@ -5,6 +5,7 @@ export function Button({
   children,
   login,
   backgroundLess,
+  closeModal,
   onClick,
   ...props
 }) {
@@ -13,6 +14,7 @@ export function Button({
       onClick={onClick}
       login={login}
       backgroundLess={backgroundLess}
+      closeModal={closeModal}
       {...props}
     >
       {children}

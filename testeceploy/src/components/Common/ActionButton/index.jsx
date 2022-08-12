@@ -6,10 +6,16 @@ export function ActionButton({
     actionclass,  
     icon,
     actionText,
+    isActive,
     ...props
 }) {
   return (
-    <ActionButtonWrapper onClick={method} className={actionclass} {...props}>
+    <ActionButtonWrapper 
+      onClick={method} 
+      className={actionclass} 
+      isActive={isActive}
+      {...props}
+    >
       {icon}
       <h2>{actionText}</h2>
     </ActionButtonWrapper>

@@ -5,14 +5,15 @@ import "./styles/style.css";
 import { Button } from "../../components/Common/Button";
 import { ActionButton } from "../../components/Common/ActionButton";
 import { BsFillCameraFill, BsFillGearFill } from "react-icons/bs"
-import { IoMdQrScanner } from "react-icons/io"
-import { AiOutlineClose } from "react-icons/ai";
+import { ImBarcode } from "react-icons/im"
 import { BiImport } from "react-icons/bi"
+import { GoTrashcan } from "react-icons/go"
 import { EtiquetaScanner } from "../../components/EtiquetaScanner";
 import { useMediaQuery } from 'react-responsive';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PistolScannerModal } from "../../components/PistolScannerModal";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function Inicio() {
     // const history = useNavigate();
@@ -39,18 +40,7 @@ export function Inicio() {
   function newEtiquetaOnTable(etiqueta){
     toast.success('A etiqueta: ' + etiqueta + " foi adicionada com sucesso!", {
         position: "top-right",
-        autoClose: 8000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-    });
-  }
-  function thisEtiquetaAlreadyExists(etiqueta){
-    toast.error('A etiqueta: ' + etiqueta + " ja foi lida!", {
-        position: "top-right",
-        autoClose: 8000,
+        autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -63,8 +53,6 @@ export function Inicio() {
         setArrayEtiquetas(arrayEtiquetas.concat(newEtiqueta));
         setCanLoadList(true);
         newEtiquetaOnTable(newEtiqueta);
-    }else{
-        thisEtiquetaAlreadyExists(newEtiqueta);
     }
   }
   function deleteEtiqueta(etiquetaIndex) {
@@ -74,84 +62,109 @@ export function Inicio() {
   }
 
   return (
-    <div className="contentArea">
-        <div className="mobileInicioContent">
-            <img src={LogoGI} style={{width: "320px"}} alt="Logo do software Grafica Inteligente."/>
-            <h1>Bem-vindo, Joao!</h1>
-
-            { boolModal && isMobile && (
+      <div className="contentArea">
+        { boolModal && isMobile && (
             <EtiquetaScanner 
                 closeModalMethod={OpenCloseModal}
                 methodUpdateArray={setNewEtiqueta}
-            />)}
-            { boolPistolModal && !isMobile && (
+            />
+        )}
+        { boolPistolModal && !isMobile && (
             <PistolScannerModal 
                 closeModalMethod={OpenClosePistolModal}
                 methodUpdateArray={setNewEtiqueta}
-            />)}
-
-            <div className="actionsArea">
-                <h2>Ações</h2>
-                
-                <div className="actionsButtonsArea">
-                    { isMobile && (
-                        <ActionButton
-                            method={OpenCloseModal}
-                            icon={<BsFillCameraFill/>}
-                            actionText="Etiquetas"
-                        />
-                    )}
-                    { !isMobile && (
-                        <ActionButton
-                            method={OpenClosePistolModal}
-                            icon={<IoMdQrScanner/>}
-                            actionText="Scannear"
-                        />
-                    )}
-                    { !isMobile && (
-                        <ActionButton
-                            icon={<BiImport/>}
-                            actionText="Importar"
-                        />
-                    )}
-                    <ActionButton
-                        icon={<BsFillGearFill/>}
-                        actionText="Configurar"
-                    />
-                </div>
-            </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={8000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
             />
-            <div className="tagMobileArea">
-                <h2>Etiquetas Pendentes</h2>
-                <table className="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Etiqueta</th>
-                            <th scope="col">Acoes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { canLoadList && arrayEtiquetas.map((etiqueta) => (
-                            <tr key={etiqueta.key}>
-                                <th></th>
-                                <td>{etiqueta}</td>
-                                <td><AiOutlineClose onClick={() => deleteEtiqueta(etiqueta)}/></td>
+        )}
+        <div className="mobileInicioContent">
+            <div className="ContentInicioPage">
+                <img src={LogoGI} style={{width: "320px"}} alt="Logo do software Grafica Inteligente."/>
+                <h1>Bem-vindo, Joao!</h1>
+
+                <div className="actionsArea">
+                    <h2>Ações</h2>
+                    
+                    <div className="actionsButtonsArea">
+                        { isMobile && (
+                            <ActionButton
+                                method={OpenCloseModal}
+                                icon={<BsFillCameraFill/>}
+                                actionText="Etiquetas"
+                                isActive
+                            />
+                        )}
+                        { !isMobile && (
+                            <ActionButton
+                                method={OpenClosePistolModal}
+                                icon={<ImBarcode/>}
+                                actionText="Scannear"
+                                isActive
+                            />
+                        )}
+                        { !isMobile && (
+                            <ActionButton
+                                icon={<BiImport/>}
+                                actionText="Importar"
+                            />
+                        )}
+                        <ActionButton
+                            icon={<BsFillGearFill/>}
+                            actionText="Configurar"
+                        />
+                    </div>
+                </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={4000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                <div className="tagMobileArea">
+                    <h2>Etiquetas Pendentes</h2>
+                    <table className="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col" className="thTextCenter">#</th>
+                                <th scope="col">Etiqueta</th>
+                                <th scope="col" className="thTextCenter">Acoes</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <Button>Gravar</Button>
+                        </thead>
+                        <tbody>
+                            { canLoadList && arrayEtiquetas.map((etiqueta) => (
+                                <tr key={etiqueta.key}>
+                                    <th></th>
+                                    <td style={{padding: "5px"}}>{etiqueta}</td>
+                                    <td className="tdDelete">
+                                        <GoTrashcan 
+                                            size={20}
+                                            className="trashCanIcon"
+                                            onClick={() => deleteEtiqueta(etiqueta)}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                            { (arrayEtiquetas === null) || (arrayEtiquetas === "") || (arrayEtiquetas.length < 1) && (
+                                <tr>
+                                    <th></th>
+                                    <td style={{padding: "5px"}}>&nbsp;</td>
+                                    <td className="tdDelete">
+                                        <GoTrashcan 
+                                            size={20}
+                                            className="trashCanIcon"
+                                        />
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                    <div className="buttonAreaScreenApp">
+                        <Button>Gravar</Button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
