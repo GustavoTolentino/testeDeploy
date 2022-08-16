@@ -65,9 +65,9 @@ export function Inicio() {
     // };
     // fetch('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', requestOptions)
     //     .then(data => console.log(data));
+    const dataRequest = {"etiquetas": "97350.1.200 UN..22/120"};
 
-    const article = { arrayEtiquetas };
-    axios.post('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', article)
+    axios.post('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', dataRequest, {headers: {"Access-Control-Allow-Origin": "*"}})
         .then(response => console.log(response));
   }
   function deleteEtiqueta(etiquetaIndex) {
