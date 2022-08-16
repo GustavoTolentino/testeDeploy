@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PistolScannerModal } from "../../components/PistolScannerModal";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { axios } from "axios" 
 
 export function Inicio() {
     // const history = useNavigate();
@@ -22,6 +23,7 @@ export function Inicio() {
     const [boolPistolModal, setBoolPistolModal] = useState(false);
     const [canLoadList, setCanLoadList] = useState(false);
     const [arrayEtiquetas, setArrayEtiquetas] = useState([]);
+    const axios = require('axios').default;
 
   const OpenCloseModal = () =>
   {
@@ -54,6 +56,19 @@ export function Inicio() {
         setCanLoadList(true);
         newEtiquetaOnTable(newEtiqueta);
     }
+  }
+  function testeAPI(){
+    // const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({arrayEtiquetas})
+    // };
+    // fetch('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', requestOptions)
+    //     .then(data => console.log(data));
+
+    const article = { arrayEtiquetas };
+    axios.post('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', article)
+        .then(response => console.log(response));
   }
   function deleteEtiqueta(etiquetaIndex) {
     setArrayEtiquetas(arrayEtiquetas.filter(element => {
@@ -162,7 +177,7 @@ export function Inicio() {
                         </tbody>
                     </table>
                     <div className="buttonAreaScreenApp">
-                        <Button>Gravar</Button>
+                        <Button onClick={testeAPI}>Gravar</Button>
                     </div>
                 </div>
             </div>
