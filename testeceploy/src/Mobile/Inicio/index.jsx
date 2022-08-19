@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PistolScannerModal } from "../../components/PistolScannerModal";
+import { APIErrorModal } from "../../components/APIErrorModal";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { axios } from "axios" 
 
@@ -21,6 +22,9 @@ export function Inicio() {
     const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
     const [boolModal, setBoolModal] = useState(false);
     const [boolPistolModal, setBoolPistolModal] = useState(false);
+    const [boolErrorModal, setBoolErrorModal] = useState(false);
+    const [descriptionErrorVar, setDescriptionErrorVar] = useState("");
+    const [tittleErrorVar, setTittleErrorVar] = useState("");
     const [canLoadList, setCanLoadList] = useState(false);
     const [arrayEtiquetas, setArrayEtiquetas] = useState([]);
     const axios = require('axios').default;
@@ -39,8 +43,26 @@ export function Inicio() {
     else
         setBoolPistolModal(false);
   }
+  const OpenCloseErrorModal = () =>
+  {
+    if(boolErrorModal === false)
+        setBoolErrorModal(true);
+    else
+        setBoolErrorModal(false);
+  }
   function newEtiquetaOnTable(etiqueta){
     toast.success('A etiqueta: ' + etiqueta + " foi adicionada com sucesso!", {
+        position: "top-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
+  }
+  function popupTagsIndexed(){
+    toast.success('As etiquetas foram gravadas com sucesso!', {
         position: "top-right",
         autoClose: 4000,
         hideProgressBar: false,
@@ -57,18 +79,51 @@ export function Inicio() {
         newEtiquetaOnTable(newEtiqueta);
     }
   }
-  function testeAPI(){
-    // const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({arrayEtiquetas})
-    // };
-    // fetch('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', requestOptions)
-    //     .then(data => console.log(data));
-    const dataRequest = ["97350.1.200 UN..22/120", "teste"];
+  async function testeAPI(){
+    try {
+        const dataRequest = { "etiquetas" : arrayEtiquetas };
+        console.log(arrayEtiquetas);
+        // var meuCarro = new Object();
+        // meuCarro.etiquetas = ["asdfasdfasdfasdfasdf", "asdasdasdasdasdasdasda"];
+        // {etiquetas: ["joasas", "aaaaaaaaaaaaaaaaaaaaaaaaaa"]}
+        
+    
+        const data = await axios.post('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', dataRequest).then(result => {
+            console.log(result);
+            if(result.status >= 200 && result.status <= 299){
+                popupTagsIndexed();
+                setArrayEtiquetas(arrayEtiquetas.filter(element => {
+                    return element === "";
+                }))
+                console.log(data);    
+            }
+            else{
+                setTittleErrorVar(result.data);
+                setDescriptionErrorVar(result.data);
+                OpenCloseErrorModal();
+                console.log("entrou no else da parada")
+                console.log(data);    
+            }
+        });
 
-    axios.post('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', dataRequest, {headers: {"Access-Control-Allow-Origin": "*"}})
-        .then(response => console.log(response));
+        // axios.post('https://nlgierpproducaoapi.azurewebsites.net/api/v1/Expedicao/liberar-etiquetas-producao', dataRequest).then(result => console.log(result))
+        
+        
+    } catch (error) {
+        if(error.response.data)
+        {
+            console.log(error);
+            setTittleErrorVar("Erro " + error.response.data.status);
+            setDescriptionErrorVar(error.response.data.erros);
+            OpenCloseErrorModal();
+        }
+        else{
+            setTittleErrorVar(error.name);
+            setDescriptionErrorVar(error.message);
+            OpenCloseErrorModal();
+        }
+    }
+
   }
   function deleteEtiqueta(etiquetaIndex) {
     setArrayEtiquetas(arrayEtiquetas.filter(element => {
@@ -88,6 +143,13 @@ export function Inicio() {
             <PistolScannerModal 
                 closeModalMethod={OpenClosePistolModal}
                 methodUpdateArray={setNewEtiqueta}
+            />
+        )}
+        { boolErrorModal && !isMobile && (
+            <APIErrorModal 
+                closeErrorModalMethod={OpenCloseErrorModal}
+                tittleError={tittleErrorVar}
+                descriptionError={descriptionErrorVar}
             />
         )}
         <div className="mobileInicioContent">
@@ -111,8 +173,14 @@ export function Inicio() {
                             <ActionButton
                                 method={OpenClosePistolModal}
                                 icon={<ImBarcode/>}
-                                actionText="Scannear"
+                                actionText="Liberar"
                                 isActive
+                            />
+                        )}
+                        { !isMobile && (
+                            <ActionButton
+                                icon={<ImBarcode/>}
+                                actionText="Estoque"
                             />
                         )}
                         { !isMobile && (
@@ -149,8 +217,8 @@ export function Inicio() {
                             </tr>
                         </thead>
                         <tbody>
-                            { canLoadList && arrayEtiquetas.map((etiqueta) => (
-                                <tr key={etiqueta.key}>
+                            { canLoadList && arrayEtiquetas.map((etiqueta, i) => (
+                                <tr key={i}>
                                     <th></th>
                                     <td style={{padding: "5px"}}>{etiqueta}</td>
                                     <td className="tdDelete">

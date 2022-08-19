@@ -6,16 +6,10 @@ import "./styles/style.css";
 
 export function PistolScannerModal({closeModalMethod, methodUpdateArray}) {
   const [pistolInputData, setPistolInputData] = useState('');
-  
-  useEffect(() => {
-    handleVerifyPistolInput();
-  }, [pistolInputData]);
 
   function handleVerifyPistolInput(){
-    if(pistolInputData.length === 22){
       methodUpdateArray(pistolInputData);
       setPistolInputData("");
-    }
   }
 
   return (
@@ -32,18 +26,22 @@ export function PistolScannerModal({closeModalMethod, methodUpdateArray}) {
           <h2>Utilize o Scanner de Pistola para adicionar um novo codigo de barras!</h2>
           <img src={barcodeCartoon} alt="Cartoon para ilustrar o processo de scannear um codigo de barras" />
           <div className="inputButtonArea">
-            <input 
-              id="pistolInput" 
-              type="text" 
-              onChange={(e) => setPistolInputData(e.target.value)}
-              value={pistolInputData}
-              placeholder="Codigo de Barras"
-              autoFocus
-            />
-            <Button onClick={closeModalMethod} closeModal>Fechar</Button>
+              <input 
+                id="pistolInput" 
+                type="text" 
+                value={pistolInputData}
+                onKeyPress={(e) => {if(e.key === 'Enter'){
+                  handleVerifyPistolInput();
+                }}}
+                placeholder="Codigo de Barras"
+                onChange={(e) => setPistolInputData(e.target.value)}
+                autoFocus
+              />                
+              <Button onClick={closeModalMethod} closeModal>Fechar</Button>
           </div>
         </div>
       </div>
     </div>
+    
   );
 }
