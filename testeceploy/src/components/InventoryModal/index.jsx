@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { Button } from "../Common/Button";
-import barcodeCartoon from "../../assets/img/Barcode-amico.svg";
+import InventoryCartoon from "../../assets/img/InventoryCartoon.svg";
 import "./styles/style.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-export function PistolScannerModal({closeModalMethod, methodUpdateArray}) {
+export function InventoryModal({closeModalMethod, methodUpdateArray}) {
   const [pistolInputData, setPistolInputData] = useState('');
   
   const renderTooltip = (props) => (
@@ -17,7 +17,7 @@ export function PistolScannerModal({closeModalMethod, methodUpdateArray}) {
   );
 
   function handleVerifyPistolInput(){
-    methodUpdateArray(pistolInputData, 1);
+    methodUpdateArray(pistolInputData, 2);
     setPistolInputData("");
   }
 
@@ -32,8 +32,8 @@ export function PistolScannerModal({closeModalMethod, methodUpdateArray}) {
               size={18}
             />
           </div>
-          <h2>Utilize o Scanner de Pistola para adicionar um novo codigo de barras!</h2>
-          <img src={barcodeCartoon} alt="Cartoon para ilustrar o processo de scannear um codigo de barras" />
+          <h2>Utilize o Scanner de Pistola para adicionar um novo produto ao estoque!</h2>
+          <img src={InventoryCartoon} alt="Cartoon para ilustrar um estoque para caixa de papelao" />
           <div className="inputButtonArea">
             <OverlayTrigger
               placement="top"

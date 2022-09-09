@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 const LoginButton = css`
-  background-color: #C10000;
+  background-color: #980000;
   color: #ffffff;
 `;
 
@@ -37,6 +37,21 @@ const DefaultButton = css`
   color: #ffffff;
 `;
 
+const ConfirmButton = css`
+margin: 0 10px;
+background-color: #900000;
+color: #ffffff;
+height: 30px;
+padding: 5px 4px;
+font-size: 16px;
+width: 60%;
+
+:hover{
+  background-color: #790000;
+  color: #ffffff;
+}
+`;
+
 export const ButtonWrapper = styled.button`
   border: none;
   padding: 16px 17px;
@@ -49,10 +64,11 @@ export const ButtonWrapper = styled.button`
   :hover{
     background-color: #900000;
   }
-  ${({ login, backgroundLess, closeModal }) => {
+  ${({ login, backgroundLess, closeModal, confirmButton }) => {
     if (login) return LoginButton;
     if (backgroundLess) return BackgroundLessButton;
     if (closeModal) return CloseModal;
+    if (confirmButton) return ConfirmButton;
     return DefaultButton;
   }};
 `;
