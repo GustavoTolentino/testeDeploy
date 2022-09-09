@@ -58,10 +58,13 @@
 tr th{
     padding: 5px;
 }
-.thTextCenter{
+.thTextCenter, .loaderCentralizeArea{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.loaderCentralizeArea{
+    width: 100%;
 }
 .ContentInicioPage h1{
     margin-bottom: 40px;

@@ -1,13 +1,8 @@
 import axios from 'axios';
 import systemConfigs from '../userConfig';
-import { useState, useEffect } from "react";
 
 const apiGIFromJsonArchive = axios.create({
-  baseURL: systemConfigs.generalConfigs.API
-});
-
-export const apiIdentidade = axios.create({
-  baseURL: "https://nlgierpidentidadeapi-v1.azurewebsites.net/api/v1/Identidade"
+  baseURL: systemConfigs.generalConfigs.APIGIInternet
 });
 
 export async function SystemInitialization(){

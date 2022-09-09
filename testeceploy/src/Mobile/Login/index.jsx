@@ -3,9 +3,7 @@ import "./styles/style.css";
 import { useNavigate } from "react-router-dom";
 import LoginF from "../../components/Common/Forms/LoginMobileForm";
 import LogoGI from "../../assets/img/GraficaInteligente_FT.png"
-import { apiIdentidade } from "../../services/api";
 import { loginCrypto } from "../../services/cryptoLib";
-import { Button } from "../../components/Common/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LineWave } from 'react-loader-spinner';
@@ -21,7 +19,6 @@ export function Login() {
   const axios = require('axios').default;
   
   const [isLoading, setIsLoading] = useState(false);
-  var pad = require('pad-left');
 
   const handleSignIn = async (e) => {
     e.preventDefault();

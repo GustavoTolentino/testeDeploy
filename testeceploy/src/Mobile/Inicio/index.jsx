@@ -9,6 +9,7 @@ import { GoTrashcan } from "react-icons/go"
 
 import { useMediaQuery } from 'react-responsive';
 import { ToastContainer, toast } from 'react-toastify';
+import { LineWave } from 'react-loader-spinner';
 
 import { ActionButton } from "../../components/Common/ActionButton";
 import { Button } from "../../components/Common/Button";
@@ -19,7 +20,6 @@ import { APIErrorModal } from "../../components/APIErrorModal";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { ConfirmModalPistol } from "../../components/ConfirmModalPistol";
 import { SystemInitialization } from "../../services/api";
-import systemConfigs from "../../userConfig";
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -37,6 +37,7 @@ export function Inicio() {
     const [boolConfirmModal, setBoolConfirmModal] = useState(false);
     const [boolConfirmModalPistol, setBoolConfirmModalPistol] = useState(false);
     const [canLoadList, setCanLoadList] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [descriptionErrorVar, setDescriptionErrorVar] = useState("");
     const [tittleErrorVar, setTittleErrorVar] = useState("");
@@ -44,7 +45,6 @@ export function Inicio() {
     const [intTypeOfSubmit, setIntTypeOfSubmit] = useState(0);
     
     const [arrayEtiquetas, setArrayEtiquetas] = useState([]);
-    const [arrayURLs, setArrayURLs] = useState([]);
     const userInfo = localStorage.getItem('userToken');
 
     useEffect(() => {
@@ -175,6 +175,7 @@ export function Inicio() {
 
   async function submitForApi(){
     try {
+        setIsLoading(true);
         const GUID_API_Producao = "84720846-D06F-47DB-0001-000000000001";
 
         const returnMethod = await SystemInitialization();
@@ -197,16 +198,19 @@ export function Inicio() {
                             setArrayEtiquetas(arrayEtiquetas.filter(element => {
                                 return element === "";
                             }))
+                            setIsLoading(false);
                         }
                         else{
                             setTittleErrorVar(result.data);
                             setDescriptionErrorVar(result.data);
+                            setIsLoading(false);
                             OpenCloseErrorModal();
                         }
                     });
             break;
             // Caso o tipo de envio seja para cadastro no estoque
             case 2:
+                setIsLoading(true);
                 const dataRequest = { "etiquetas" : arrayEtiquetas};
                 await APIProducao.post('/Expedicao/entrar-estoque-etiquetas-producao', dataRequest, config ).then(result => {
                     if(result.status >= 200 && result.status <= 299){
@@ -214,10 +218,12 @@ export function Inicio() {
                         setArrayEtiquetas(arrayEtiquetas.filter(element => {
                             return element === "";
                         }))
+                        setIsLoading(false);
                     }
                     else{
                         setTittleErrorVar(result.response.data);
                         setDescriptionErrorVar(result.response.data);
+                        setIsLoading(false);
                         OpenCloseErrorModal();
                     }
                 });
@@ -229,6 +235,7 @@ export function Inicio() {
         }
     } catch (error) {
         console.log("deu errro: " + error);
+        setIsLoading(false);
         if(error.response.data)
         {
             console.log(error);
@@ -344,6 +351,7 @@ export function Inicio() {
                     draggable
                     pauseOnHover
                 />
+                
                 <div className="tagMobileArea">
                     <h2>Etiquetas Pendentes</h2>
                     <table className="table table-striped table-bordered table-hover">
@@ -384,6 +392,20 @@ export function Inicio() {
                     </table>
                     <div className="buttonAreaScreenApp">
                         <Button onClick={submitForApi}>Gravar</Button>
+                        <div className="loaderCentralizeArea">
+                            <LineWave
+                                height="100"
+                                width="100"
+                                color="#900000"
+                                ariaLabel="line-wave"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                                visible={isLoading}
+                                firstLineColor=""
+                                middleLineColor=""
+                                lastLineColor=""
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
